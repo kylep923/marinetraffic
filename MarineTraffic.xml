@@ -195,11 +195,10 @@ table.google-visualization-table-table,
     dt.addColumn('string', 'Ship Name');
     dt.addColumn('string', 'Arrival/Departure');
     dt.addColumn('Timestamp'));
-    var ct = 0;
     $.each(response, function (i, el) {
-      var shipname = response[ct].SHIPNAME;
-      var arr_dep = response[ct].MOVE_TYPE;
-      var time = response[ct].TIMESTAMP_LT;
+      var shipname = el.SHIPNAME;
+      var arr_dep = el.MOVE_TYPE;
+      var time = el.TIMESTAMP_LT;
       ct++;
       dt.addRow([
         shipname,
