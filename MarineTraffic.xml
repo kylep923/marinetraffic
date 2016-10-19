@@ -195,7 +195,7 @@ table.google-visualization-table-table,
     dt.addColumn('string', 'Ship Name');
     dt.addColumn('string', 'Arrival/Departure');
     dt.addColumn('Timestamp'));
-    $.each(response.portcalls, function (i, el) {
+    $.each(response, function (i, el) {
       var shipname = el.SHIPNAME;
       var arr_dep = el.MOVE_TYPE;
       var time = el.TIMESTAMP_LT;
