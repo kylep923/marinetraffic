@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?> 
 <Module> 
-<ModulePrefs title="RevelDigital FlightStats Gadget" description="Tabular display of flight information for a specific airport" author="RevelDigital" background="transparent">
+<ModulePrefs title="RevelDigital MarineTraffic Gadget" description="Tabular display of port information for a specific port" author="RevelDigital" background="transparent">
   <UserPref name="hasTitle" display_name="Show Header" datatype="bool" default_value="true" />
-  <UserPref name="fsAppId" display_name="FlightStats App ID" datatype="string" required="true" />
-  <UserPref name="fsAppKey" display_name="FlightStats App Key" datatype="string" required="true" />
-  <UserPref name="airportCode" display_name="Airport Code" datatype="string" required="true" />
+  <UserPref name="AppKey" display_name="MarineTraffic App Key" datatype="string" required="true" />
+  <UserPref name="portCode" display_name="Port Code" datatype="string" required="true" />
   <UserPref name="boardType" display_name="Select Info Type" datatype="enum" default_value="dep">
     <EnumValue value="dep" display_value="Departures" />
     <EnumValue value="arr" display_value="Arrivals" />
@@ -181,7 +180,7 @@ table.google-visualization-table-table,
     $('.lastUpdate span').text(now.format("LT"));
     
     $.ajax({
-      url: "https://api.flightstats.com/flex/flightstatus/rest/v2/jsonp/airport/status/" + prefs.getString("airportCode") + "/" + (dep ? "dep" : "arr") + "/" + now.year() + "/" + (now.month()+1) + "/" + now.date() + "/" + now.hour() + "?appId=" + prefs.getString("fsAppId") + "&appKey=" + prefs.getString("fsAppKey") + "&utc=false&numHours=" + prefs.getInt("numHours") + "&maxFlights=" + prefs.getInt("maxFlights") + "&extendedOptions=useInlinedReferences&callback=?",
+      url: "http://services.marinetraffic.com/api/portcalls/a2e5977cd4e6ea00b8e9d4a69662180423990065/portid:1/movetype:0,
       type: "GET",
       dataType: "jsonp",
       success: function (data) {
@@ -190,88 +189,21 @@ table.google-visualization-table-table,
     });
   }
   
-  function getAirlineByCode(name, flightNumber, codeshares) {
-    if (codeshares == null) {
-      return name;
-    }
-    $.each(codeshares, function (i, el) {
-      if (el.relationship == "S" && flightNumber == el.flightNumber) {
-        name = el.carrier.name;
-      }
-    });
-    
-    return name;
-  }
-  
-  function getStatusByCode(code) {
-    switch (code) {
-      case 'A':
-        return 'Active';
-      case 'C':
-        return 'Cancelled';
-      case 'D':
-        return 'Diverted';
-      case 'DN':
-        return 'Data source needed';
-      case 'L':
-        return 'Landed';
-      case 'NO':
-        return 'Not Operational';
-      case 'R':
-        return 'Redirected';
-      case 'S':
-        return 'Scheduled';
-      default:
-        return 'Unknown';
-    }
-  }
-  
   function draw(response) {
     
     var dt = new google.visualization.DataTable();
-    dt.addColumn('string', 'Airline');
-    dt.addColumn('string', 'Flight Number');
-    dt.addColumn('string', (dep ? 'To' : 'From'));
-    dt.addColumn('string', 'Gate');
-    dt.addColumn('datetime', 'Scheduled');
-    dt.addColumn('string', 'Status');
-    $.each(response.flightStatuses, function (i, el) {
-      var gate = " - ";
-      var status = getStatusByCode(el.status);
-      var time = moment(dep ? el.departureDate.dateLocal : el.arrivalDate.dateLocal);
-      
-      if (dep) {
-        if (el.airportResources) {
-          if (el.airportResources.departureGate) {
-            gate = el.airportResources.departureGate;
-          }
-        }
-        if (el.status != "C" && el.status != "L" && el.operationalTimes.estimatedGateDeparture) {
-          var est = moment(el.operationalTimes.estimatedGateDeparture.dateLocal);
-          if (Math.abs(time.diff(est, 'minutes')) > 5) {
-            status = "ETD " + est.format("LT");
-          }
-        }
-      } else {
-        if (el.airportResources) {
-          if (el.airportResources.arrivalGate) {
-            gate = el.airportResources.arrivalGate;
-          }
-        }
-        if (el.status != "C" && el.status != "L" && el.operationalTimes.estimatedGateArrival) {
-          var est = moment(el.operationalTimes.estimatedGateArrival.dateLocal);
-          if (Math.abs(time.diff(est, 'minutes')) > 5) {
-            status = "ETA " + est.format("LT");
-          }
-        }
-      }
+    dt.addColumn('string', 'Ship Name');
+    dt.addColumn('string', 'Arrival/Departure');
+    dt.addColumn('Timestamp'));
+    $.each(response.portcalls, function (i, el) {
+      var shipname = el.SHIPNAME;
+      var arr_dep = el.MOVE_TYPE;
+      var time = el.TIMESTAMP_LT;
+     
       dt.addRow([
-        getAirlineByCode(el.carrier.name, el.flightNumber, el.codeshares),
-        el.flightNumber,
-        (dep ? el.arrivalAirport.name : el.departureAirport.name),
-        gate,
-        {v: time.toDate(), f: time.format("LT") },
-        status
+        shipname,
+        time,
+        arr_dep
       ]);
     });
     
