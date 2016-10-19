@@ -207,7 +207,7 @@ table.google-visualization-table-table,
       ]);
     });
     
-    dt.sort([{column:4}]);
+    dt.sort([{column:1}]);
     
     google.visualization.events.addListener(table, "ready",
       function (event) {
