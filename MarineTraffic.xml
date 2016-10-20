@@ -1,35 +1,37 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Module>
-    <ModulePrefs title="RevelDigital MarineTraffic Gadget" description="Tabular display of port information for a specific port" author="RevelDigital" background="transparent">
-        <UserPref name="hasTitle" display_name="Show Header" datatype="bool" default_value="true" />
-        <UserPref name="AppKey" display_name="MarineTraffic App Key" datatype="string" required="true" />
-        <UserPref name="portCode" display_name="Port Code" datatype="string" required="true" />
-        <UserPref name="boardType" display_name="Select Info Type" datatype="enum" default_value="dep">
-            <EnumValue value="dep" display_value="Departures" />
-            <EnumValue value="arr" display_value="Arrivals" />
-        </UserPref>
-        <UserPref name="numHours" display_name="Number of hours worth of arrivals to include (6 max)" datatype="string" default_value="2" />
-        <UserPref name="maxFlights" display_name="Maximum unique flights to include" datatype="string" default_value="5" />
-        <UserPref name="header-style" display_name="Header Style" datatype="style" default_value="font-family:Verdana;color:rgb(255, 255, 255);font-size:24px;" required="true" />
-        <UserPref name="body-style" display_name="Body Style" datatype="style" default_value="font-family:Verdana;color:rgb(255, 255, 255);font-size:18px;" required="true" />
-        <UserPref name="body-style-odd" display_name="Alternating Row Style" datatype="style" default_value="font-family:Verdana;color:rgb(255, 255, 255);font-size:18px;" required="true" />
-        <UserPref name="scrollSpeed" display_name="Scroll Speed"  datatype="enum" default_value="none">
-            <EnumValue value="fastest" display_value="Fastest" />
-            <EnumValue value="fast" display_value="Fast" />
-            <EnumValue value="medium" display_value="Medium" />
-            <EnumValue value="slow" display_value="Slow" />
-            <EnumValue value="none" display_value="None" />
-        </UserPref>
-        <UserPref name="scrollBy" display_name="Scroll By" datatype="enum" default_value="continuous">
-            <EnumValue value="continuous" display_value="Continuous" />
-            <EnumValue value="page" display_value="Page" />
-        </UserPref>
-        <UserPref name="rowPadding" display_name="Row Padding" default_value="10" />
-        <UserPref name="rdW" display_name="Width" required="true" default_value="280" datatype="hidden" />
-        <UserPref name="rdH" display_name="Height" required="true" default_value="190" datatype="hidden" />
-    </ModulePrefs>
-    <Content type="html">
-        <![CDATA[
+<?xml version="1.0" encoding="UTF-8" ?> 
+<Module> 
+<ModulePrefs title="RevelDigital FlightStats Gadget" description="Tabular display of flight information for a specific airport" author="RevelDigital" background="transparent">
+  <UserPref name="hasTitle" display_name="Show Header" datatype="bool" default_value="true" />
+  <UserPref name="fsAppId" display_name="FlightStats App ID" datatype="string" required="true" />
+  <UserPref name="fsAppKey" display_name="FlightStats App Key" datatype="string" required="true" />
+  <UserPref name="airportCode" display_name="Airport Code" datatype="string" required="true" />
+  <UserPref name="boardType" display_name="Select Info Type" datatype="enum" default_value="dep">
+    <EnumValue value="dep" display_value="Departures" />
+    <EnumValue value="arr" display_value="Arrivals" />
+  </UserPref>
+  <UserPref name="numHours" display_name="Number of hours worth of arrivals to include (6 max)" datatype="string" default_value="2" />
+  <UserPref name="maxFlights" display_name="Maximum unique flights to include" datatype="string" default_value="5" />
+  <UserPref name="header-style" display_name="Header Style" datatype="style" default_value="font-family:Verdana;color:rgb(255, 255, 255);font-size:24px;" required="true" />
+  <UserPref name="body-style" display_name="Body Style" datatype="style" default_value="font-family:Verdana;color:rgb(255, 255, 255);font-size:18px;" required="true" />
+  <UserPref name="body-style-odd" display_name="Alternating Row Style" datatype="style" default_value="font-family:Verdana;color:rgb(255, 255, 255);font-size:18px;" required="true" />
+  <UserPref name="scrollSpeed" display_name="Scroll Speed"  datatype="enum" default_value="none">
+    <EnumValue value="fastest" display_value="Fastest" />
+    <EnumValue value="fast" display_value="Fast" />
+    <EnumValue value="medium" display_value="Medium" />
+    <EnumValue value="slow" display_value="Slow" />
+    <EnumValue value="none" display_value="None" />
+  </UserPref>
+  <UserPref name="scrollBy" display_name="Scroll By" datatype="enum" default_value="continuous">
+    <EnumValue value="continuous" display_value="Continuous" />
+    <EnumValue value="page" display_value="Page" />
+  </UserPref>
+  <UserPref name="rowPadding" display_name="Row Padding" default_value="10" />
+  <UserPref name="rdW" display_name="Width" required="true" default_value="280" datatype="hidden" />
+  <UserPref name="rdH" display_name="Height" required="true" default_value="190" datatype="hidden" />
+</ModulePrefs>
+<Content type="html">
+<![CDATA[
+
         <style type="text/css">
             body *
             {
