@@ -180,7 +180,7 @@
                 $('.lastUpdate span').text(now.format("LT"));
 
                 $.ajax({
-                    url: "http://services.marinetraffic.com/api/portcalls/a2e5977cd4e6ea00b8e9d4a69662180423990065/portid:1/movetype:0",
+                    url: "http://services.marinetraffic.com/api/portcalls/a2e5977cd4e6ea00b8e9d4a69662180423990065/portid:1/protocol:jsono",
                     type: "GET",
                     dataType: "jsonp",
                     success: function (data) {
